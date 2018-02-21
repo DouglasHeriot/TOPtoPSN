@@ -1,0 +1,3 @@
+[submodule "vendor/PosiStageNet"]
+	path = vendor/PosiStageNet
+	url = git@github.com:DouglasHeriot/PosiStageNet.git
