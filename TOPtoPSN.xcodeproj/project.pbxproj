@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E23329E31DF092C90002B4FE /* CPlusPlusCHOPExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E23329E11DF092C90002B4FE /* CPlusPlusCHOPExample.cpp */; };
+		E23329E31DF092C90002B4FE /* TOPtoPSN.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E23329E11DF092C90002B4FE /* TOPtoPSN.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,8 +24,8 @@
 		E23329D91DF092AD0002B4FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		E23329DF1DF092C90002B4FE /* CHOP_CPlusPlusBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHOP_CPlusPlusBase.h; sourceTree = SOURCE_ROOT; };
 		E23329E01DF092C90002B4FE /* CPlusPlus_Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPlusPlus_Common.h; sourceTree = SOURCE_ROOT; };
-		E23329E11DF092C90002B4FE /* CPlusPlusCHOPExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPlusPlusCHOPExample.cpp; sourceTree = SOURCE_ROOT; };
-		E23329E21DF092C90002B4FE /* CPlusPlusCHOPExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPlusPlusCHOPExample.h; sourceTree = SOURCE_ROOT; };
+		E23329E11DF092C90002B4FE /* TOPtoPSN.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOPtoPSN.cpp; sourceTree = SOURCE_ROOT; };
+		E23329E21DF092C90002B4FE /* TOPtoPSN.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TOPtoPSN.hpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +86,8 @@
 			children = (
 				E23329DF1DF092C90002B4FE /* CHOP_CPlusPlusBase.h */,
 				E23329E01DF092C90002B4FE /* CPlusPlus_Common.h */,
-				E23329E11DF092C90002B4FE /* CPlusPlusCHOPExample.cpp */,
-				E23329E21DF092C90002B4FE /* CPlusPlusCHOPExample.h */,
+				E23329E11DF092C90002B4FE /* TOPtoPSN.cpp */,
+				E23329E21DF092C90002B4FE /* TOPtoPSN.hpp */,
 				E23329D91DF092AD0002B4FE /* Info.plist */,
 			);
 			name = CHOP;
@@ -160,7 +160,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E23329E31DF092C90002B4FE /* CPlusPlusCHOPExample.cpp in Sources */,
+				E23329E31DF092C90002B4FE /* TOPtoPSN.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,9 +274,13 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/vendor/PosiStageNet/include";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/vendor/PosiStageNet/include",
+					/usr/local/include,
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = /;
+				OTHER_LDFLAGS = "/usr/local/lib/libboost_system-mt.a";
 				PRODUCT_BUNDLE_IDENTIFIER = com.douglasheriot.TOPtoPSN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -290,9 +294,13 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/vendor/PosiStageNet/include";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/vendor/PosiStageNet/include",
+					/usr/local/include,
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = /;
+				OTHER_LDFLAGS = "/usr/local/lib/libboost_system-mt.a";
 				PRODUCT_BUNDLE_IDENTIFIER = com.douglasheriot.TOPtoPSN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

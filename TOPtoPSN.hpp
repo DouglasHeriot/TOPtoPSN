@@ -10,6 +10,7 @@
 
 #include "CHOP_CPlusPlusBase.h"
 #include <psn_lib.hpp>
+#include <boost/asio.hpp>
 
 /*
 
@@ -28,11 +29,11 @@ If no input is connected then the node will output a smooth sine wave at 120hz.
 
 
 // To get more help about these functions, look at CHOP_CPlusPlusBase.h
-class CPlusPlusCHOPExample : public CHOP_CPlusPlusBase
+class TOPtoPSN : public CHOP_CPlusPlusBase
 {
 public:
-	CPlusPlusCHOPExample(const OP_NodeInfo* info);
-	virtual ~CPlusPlusCHOPExample();
+	TOPtoPSN(const OP_NodeInfo* info);
+	virtual ~TOPtoPSN();
 
 	virtual void		getGeneralInfo(CHOP_GeneralInfo* ) override;
 	virtual bool		getOutputInfo(CHOP_OutputInfo*) override;
@@ -65,9 +66,21 @@ private:
 	// In this example this value will be incremented each time the execute()
 	// function is called, then passes back to the CHOP 
 	int32_t					 myExecuteCount;
-
-
-	double					 myOffset;
-
-
+	
+	boost::asio::io_context io_context_;
+	boost::asio::ip::udp::endpoint endpoint_;
+	boost::asio::ip::udp::socket socket_;
+	int messages_;
+	int sentPackets_;
+	int trackersSize_;
+	std::string lastError_;
+	
+	::psn::psn_tracker_array trackers_;
+	::psn::psn_encoder psn_encoder_;
+	
+	std::string prevInterfaceAddr_;
+	
+	void updateTrackers(OP_Inputs *inputs, const OP_TOPInput *top, const float *pixels);
+	void sendTrackers(OP_Inputs *inputs);
+	void sendInfo(OP_Inputs *inputs);
 };
