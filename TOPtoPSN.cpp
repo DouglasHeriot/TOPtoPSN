@@ -21,6 +21,9 @@
 
 static const char LocationsParName[] = "Winchloctop";
 static const char InterfaceParName[] = "Intaddr";
+static const char UDPPortName[] = "Udpport";
+static const char UDPDestAddrName[] = "Destaddr";
+
 
 using namespace boost::asio;
 
@@ -167,13 +170,16 @@ TOPtoPSN::execute(const CHOP_Output* output,
 	
 	try
 	{
+		const std::string destAddr = inputs->getParString(UDPDestAddrName);
+		boost::asio::ip::udp::endpoint endpoint(boost::asio::ip::make_address(destAddr), inputs->getParInt(UDPPortName));
+		
 		updateTrackers(inputs, locationsTOP, pixels);
 		
 		if(myExecuteCount % 50 == 0) {
-			sendInfo(inputs);
+			sendInfo(inputs, endpoint);
 		}
 		
-		sendTrackers(inputs);
+		sendTrackers(inputs, endpoint);
 	}
 	catch (const std::exception &e)
 	{
@@ -217,7 +223,7 @@ void TOPtoPSN::updateTrackers(OP_Inputs *inputs, const OP_TOPInput *top, const f
 	trackersSize_ = trackers_.size();
 }
 
-void TOPtoPSN::sendTrackers(OP_Inputs *inputs)
+void TOPtoPSN::sendTrackers(OP_Inputs *inputs, const boost::asio::ip::udp::endpoint &endpoint)
 {
 	::std::list< ::std::string > data_packets ;
 	
@@ -245,7 +251,7 @@ void TOPtoPSN::sendTrackers(OP_Inputs *inputs)
 	}
 }
 
-void TOPtoPSN::sendInfo(OP_Inputs *inputs)
+void TOPtoPSN::sendInfo(OP_Inputs *inputs, const boost::asio::ip::udp::endpoint &endpoint)
 {
 	::std::list< ::std::string > info_packets ;
 	
@@ -431,6 +437,30 @@ TOPtoPSN::setupParameters(OP_ParameterManager* manager)
 		sp.defaultValue = "192.168.0.91";
 		
 		OP_ParAppendResult res = manager->appendString(sp);
+		assert(res == OP_ParAppendResult::Success);
+	}
+	
+	// Destination Multicast Address
+	{
+		OP_StringParameter sp;
+		sp.name = UDPDestAddrName;
+		sp.label = "Destination Address";
+		sp.defaultValue = PSN_DEFAULT_UDP_MULTICAST_ADDR;
+		
+		OP_ParAppendResult res = manager->appendString(sp);
+		assert(res == OP_ParAppendResult::Success);
+	}
+	
+	// Destination UDP Port
+	{
+		OP_NumericParameter sp;
+		sp.name = UDPPortName;
+		sp.label = "Destination Port";
+		sp.defaultValues[0] = PSN_DEFAULT_UDP_PORT;
+		sp.minValues[0] = 1;
+		sp.maxValues[0] = 65535;
+		
+		OP_ParAppendResult res = manager->appendInt(sp);
 		assert(res == OP_ParAppendResult::Success);
 	}
 }

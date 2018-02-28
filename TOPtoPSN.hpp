@@ -81,6 +81,6 @@ private:
 	std::string prevInterfaceAddr_;
 	
 	void updateTrackers(OP_Inputs *inputs, const OP_TOPInput *top, const float *pixels);
-	void sendTrackers(OP_Inputs *inputs);
-	void sendInfo(OP_Inputs *inputs);
+	void sendTrackers(OP_Inputs *inputs, const boost::asio::ip::udp::endpoint &endpoint);
+	void sendInfo(OP_Inputs *inputs, const boost::asio::ip::udp::endpoint &endpoint);
 };
