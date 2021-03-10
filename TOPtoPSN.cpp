@@ -197,7 +197,7 @@ void TOPtoPSN::updateTrackers(OP_Inputs *inputs, const OP_TOPInput *top, const f
 	for ( int i = 0; i < numberOfTrackers/2; i++)
 	{
 		std::stringstream name;
-		name << "Strip " << (i+1);
+		name << "scrim " << (i+1);
 		
 		auto &tracker = trackers_[i];
 		
@@ -208,15 +208,15 @@ void TOPtoPSN::updateTrackers(OP_Inputs *inputs, const OP_TOPInput *top, const f
 		const int startPixelSecond = i*2*4+4;
 		
 		tracker.pos_.x = (pixels[startPixel+0] + pixels[startPixelSecond+0])/2;
-		tracker.pos_.y = -(pixels[startPixel+2] + pixels[startPixelSecond+2])/2;
-		tracker.pos_.z = (pixels[startPixel+1] + pixels[startPixelSecond+1])/2;
+		tracker.pos_.y = (pixels[startPixel+1] + pixels[startPixelSecond+1])/2;
+		tracker.pos_.z = (pixels[startPixel+2] + pixels[startPixelSecond+2])/2;
 		
 		const auto angleRadians = std::sin((pixels[startPixel+1] - pixels[startPixelSecond+1]) / 1.0);
 		const auto angleDegrees = 180.0 + angleRadians * 180.0 / M_PI;
 		
 		tracker.ori_.x = 0.0;
-		tracker.ori_.y = angleDegrees; // opposite (height difference) over hypotenuse (1)
-		tracker.ori_.z = 0.0;
+		tracker.ori_.y = 0.0;
+		tracker.ori_.z = angleDegrees; // opposite (height difference) over hypotenuse (1)
 	}
 	
 	psn_encoder_.set_trackers(trackers_);
